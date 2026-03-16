@@ -244,9 +244,9 @@ Fields:
 | ----- | ------------------------------- |
 | name  | name of the test                |
 | date  | test date                       |
-| shift | exam shift (Shift 1 or Shift 2) |
+| shift | exam shift (Shift 1 is `False` & Shift 2 is `True`) |
 
-Example:
+Source:
 
 ```python
 class Test(models.Model):
@@ -274,7 +274,7 @@ Fields:
 | option_1–4      | images of answer options                 |
 | correct         | correct answers                          |
 
-Example:
+Source:
 
 ```python
 class Question(models.Model):
