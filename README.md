@@ -4,7 +4,7 @@ A **recreation of the JEE Main Computer Based Test interface** built with Django
 
 ![screenshot_of_test](screenshots/test_screenshot.jpeg)
 
-(Screenshot question content blurred. Interface recreated for practice purposes only. [View more screenshots](tree/main/screenshots))
+(Screenshot question content blurred. Interface recreated for practice purposes only. [View more screenshots](screenshots/))
 This project allows users to **create and attempt mock JEE Main tests** using question papers extracted from official response sheet pages.
 
 The goal of the project is to replicate the **look and behaviour of the real exam interface** so students can practice in an environment similar to the actual test.
