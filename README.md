@@ -39,7 +39,7 @@ Official information about JEE Main can be found on the NTA website:
   * marking for review
   * section switching
 * Detailed **attempt analysis**
-* Custom **test import system** using response sheet pages
+* Custom **test import system** using official response sheet pages
 * Built-in **management panel** for managing tests and attempts
 
 ---
@@ -116,7 +116,7 @@ python manage.py import_jee_test
 
 You will be prompted to enter:
 
-* the response sheet URL
+* the response sheet URL (https://cdn3.digialm.com/....)
 * the answer key
 
 ---
