@@ -1,0 +1,36 @@
+# Generated using ChatGPT, redundancies may be present.
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+testfile.py
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Django stuff
+db.sqlite3
+*.log
+media/
+
+# Static build files
+static/options/
+static/questions/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Environment variables
+.env

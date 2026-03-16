@@ -1,0 +1,25 @@
+{% extends 'accounts/base.html' %}
+
+{% block title %}Dashboard — Mains CBT{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="auth-container">
+    <h1>Your Tests</h1>
+    <div class="tests-grid">
+      {% for test in tests %}
+        <div class="test-card">
+          <h3>{{ test.title }}</h3>
+          <p>Duration: {{ test.duration }}</p>
+          <div class="test-actions">
+            <a class="btn start-btn" href="{% url 'accounts:start_test' test.id %}">Start</a>
+            <a class="btn info-btn" href="#">Details</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

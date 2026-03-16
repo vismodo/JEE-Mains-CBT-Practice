@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Mains CBT</title>
+    <link rel="stylesheet" href="/static/css/test.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <span class="value">{{ test.name }}</span>
+            <span class="value timer" id="timer">00:00:00</span>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Question Section -->
+            <div class="question-section">
+                <h2>Question {{ question.question_number }}:</h2>
+                <div style="height: calc(100vh - 310px); overflow-y: scroll;">
+                <div class="question-image-container">
+                    <img src="{{question.question.url}}" alt="Question {{ question.question_number }}" class="question-image">
+                </div>
+                <!-- Options -->
+                {% if question.section != True %}
+                <div class="options-container">
+                    <div class="option">
+                        <input type="radio" id="option1" name="question1"  value="1" onclick="document.getElementById('selected_option').value = 1;" {% if current_opt == 1 %}checked{% endif %}>
+                        <label for="option1">
+                            <img src="{{question.option_1.url}}" alt="Option 1" class="option-image">
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option2" name="question1" value="2" onclick="document.getElementById('selected_option').value = 2;">
+                        <label for="option2">
+                            <img src="{{question.option_2.url}}" alt="Option 2" class="option-image">
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option3" name="question1" value="3" onclick="document.getElementById('selected_option').value = 3;">
+                        <label for="option3">
+                            <img src="{{question.option_3.url}}" alt="Option 3" class="option-image">
+                        </label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="option4" name="question1" value="4" onclick="document.getElementById('selected_option').value = 4;">
+                        <label for="option4">
+                            <img src="{{question.option_4.url}}" alt="Option 4" class="option-image">
+                        </label>
+                    </div>
+                </div>
+                {% else %}
+                <div class="options-container">
+                    <input type="number" name="answer" onchange="document.getElementById('selected_option').value=this.value" {% if current_opt %}value = "{{ current_opt }}" {% endif %}>
+                </div>
+                {% endif %}
+                </div>
+                <!-- Action Buttons -->
+                <form hidden method="POST" target="">
+                    {% csrf_token %}
+                    <input type="hidden" name="question_id" value="{{ question.question_number }}">
+                    <input type="hidden" id="selected_option" name="selected_option" {% if current_opt %}value = "{{ current_opt }}"{% endif %}>
+                    <input type="hidden" name="action" id="action">
+                </form>
+                <div class="button-group">
+                    <button class="btn btn-save" onclick="document.getElementById('action').value='sn'; document.querySelector('form').submit();">SAVE & NEXT</button>
+                    <button class="btn btn-clear" id="clearBtn">CLEAR</button>
+                    <button class="btn btn-mark" onclick="document.getElementById('action').value='sm'; document.querySelector('form').submit();">SAVE & MARK FOR REVIEW</button>
+                    <button class="btn btn-mark-next" onclick="document.getElementById('action').value='mn'; document.querySelector('form').submit();">MARK FOR REVIEW & NEXT</button>
+                </div>
+
+                <!-- Navigation -->
+                <div class="navigation">
+                    <div>
+                    <button class="btn btn-back" onclick="window.location.href='./nav/{{ question.question_number|add:-1 }}'"><< BACK</button>
+                    <button class="btn btn-next" onclick="window.location.href='./nav/{{ question.question_number|add:1 }}'">NEXT >></button></div>
+                    <button class="btn btn-submit" onclick="document.getElementById('action').value='submit'; document.querySelector('form').submit();">SUBMIT</button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Status Summary -->
+                <div class="status-box">
+                    <div class="status-item">
+                        <span class="status-badge not-visited">{{ not_visited }}</span>
+                        <span class="status-label">Not Visited</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-badge not-answered">{{ not_answered }}</span>
+                        <span class="status-label">Not Answered</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-badge answered">{{ answered }}</span>
+                        <span class="status-label">Answered</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-badge marked">{{ marked }}</span>
+                        <span class="status-label">Marked for Review</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-badge marked-answered">{{ marked_answered }}</span>
+                        <span class="status-label">Answered & Marked for Review</span>
+                    </div>
+                </div>
+
+                <!-- Question Grid -->
+                <div class="question-grid">
+                    {% for q in question_stat %}
+                    <button class="q-btn{% if q == 1 %} not-answered {% elif q == 2 %} answered {% elif q == 3 %} marked {% elif q == 4 %} marked-answered {% endif %}" onclick="window.location.href='./nav/{{ forloop.counter }}'">{{ forloop.counter }}</button>
+                    {% endfor %}
+                </div>
+            </aside>
+        </div>
+    </div>
+    <script>
+        // Clear button functionality
+        const testStart = new Date("{{ test_start_time|date:'Y-m-d H:i:s' }}").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            if (now - testStart >= 180 * 60 * 1000) {
+                document.getElementById('action').value = 'submit';
+                document.querySelector('form').submit();
+            }
+            const elapsed = now - testStart;
+            const remaining = 180 * 60 * 1000 - elapsed;
+
+            if (remaining <= 0) {
+                document.getElementById('timer').textContent = "00:00:00";
+            } else {
+                const hours = Math.floor(remaining / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                document.getElementById('timer').textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }, 1000);
+        {% if question.section %}
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementsByName('answer')[0].value = '';
+            document.getElementsByName('selected_option')[0].value = '';});
+        {% else %}
+        const n = {{current_opt}};
+        document.getElementsByName('question1')[n-1].checked = true;
+        document.getElementById('selected_option').value = n;
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            // Clear the selected radio button
+            const options = document.getElementsByName('question1');
+            options.forEach(option => option.checked = false);
+            // Clear the hidden input value
+            document.getElementById('selected_option').value = '';
+            document.getElementById('action').value = 'c';
+            document.querySelector('form').submit();
+        });
+        {% endif %}
+    </script>
+</body>
+</html>

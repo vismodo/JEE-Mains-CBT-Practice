@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Attempts</title>
+    <link rel="stylesheet" href="/static/css/attempts.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Attempts by <span style="color:rgb(109, 109, 109)">{{ user.username }}</span></h1>
+
+    <table class="attempt-table">
+
+        <thead>
+            <tr>
+                <th>Attempt ID</th>
+                <th>Test</th>
+                <th>Score</th>
+                <th>Date</th>
+                <th>Analysis</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for attempt in attempts %}
+        <tr>
+
+            <td>{{ attempt.id }}</td>
+            <td>{{ attempt.test.name }}</td>
+            <td>{{ attempt.score }}</td>
+            <td>{{ attempt.started }}</td>
+
+            <td>
+                <a class="btn" href="/testanalysis/{{ attempt.id }}/">
+                    View Analysis
+                </a>
+            </td>
+
+        </tr>
+        {% empty %}
+
+        <tr>
+            <td colspan="5">No attempts found.</td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

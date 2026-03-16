@@ -1,0 +1,76 @@
+/* Bootstrap-like Auth styles */
+:root{
+	--bs-primary:#0d6efd;
+	--bs-primary-hover:#0b5ed7;
+	--input-border:#ced4da;
+	--muted:#6c757d;
+}
+html,body{height:100%;}
+body{
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+	background: linear-gradient(180deg,#f8fafc 0%, #ffffff 100%);
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	padding:2rem;
+	overflow: hidden;
+	margin: 0px;
+}
+.auth-container{
+	width:100%;
+	max-width:420px;
+	background:#fff;
+	padding:2.25rem;
+	border-radius:.5rem;
+	box-shadow:0 6px 18px rgba(22,28,45,0.08);
+	border:1px solid rgba(0,0,0,0.04);
+}
+.auth-container h2{margin:0 0 1rem 0; font-size:1.5rem; color:#0f172a; text-align:center}
+.auth-container form{display:flex; flex-direction:column; gap:.75rem;}
+.auth-container input[type="text"],
+.auth-container input[type="password"],
+.auth-container input[type="email"]{
+	width: calc(100% - 1.5rem);
+	padding:.625rem .75rem;
+	border:1px solid var(--input-border);
+	border-radius:.375rem;
+	font-size:1rem;
+	transition:box-shadow .15s ease, border-color .15s ease;
+}
+.auth-container input::placeholder{color:#94a3b8}
+.auth-container input:focus{outline:none; box-shadow:0 0 0 .15rem rgba(13,110,253,0.1); border-color:var(--bs-primary-hover);}
+.auth-actions{display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;}
+.auth-actions .btn{padding:.5rem .75rem; border-radius:.375rem; font-weight:600; text-decoration:none; display:inline-block}
+.auth-actions button{background:var(--bs-primary); color:#fff; border:none; cursor:pointer}
+.auth-actions button:hover{background:var(--bs-primary-hover)}
+.auth-actions a{color:var(--bs-primary); font-weight:600; text-decoration:none}
+.auth-footer{margin-top:1rem; font-size:.9rem; color:var(--muted); text-align:center}
+.messages{list-style:none; padding:0; margin-bottom:.75rem}
+.messages li{background:#fff3cd; border:1px solid #ffeeba; color:#856404; padding:.5rem .75rem; border-radius:.375rem}
+
+@media (max-width:480px){
+	.auth-container{padding:1.25rem}
+	.auth-actions{flex-direction:column; gap:.5rem}
+	.auth-actions a{display:inline-block}
+}
+
+.error-message{
+	background:#f8d7da;
+	border:1px solid #f5c2c7;
+	color:#842029;
+	padding:.5rem .75rem;
+	border-radius:.375rem;
+	margin-top:.5rem;
+}
+
+.submit-btn{
+	background:var(--bs-primary);
+	color:#fff;
+	width:100%;
+	border:none;
+	padding:.5rem .75rem;
+	border-radius:.375rem;
+	font-weight:600;
+	cursor:pointer;
+	transition:background .15s ease;
+}

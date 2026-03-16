@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin Panel</title>
+    <link rel="stylesheet" href="/static/css/admin_panel.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Test Admin Panel</h1>
+
+    <div class="top-actions">
+        <a href="/" class="btn create-btn">
+            Return to Student Dashboard
+        </a>
+    </div>
+
+    <!-- TEST LIST -->
+    <section class="panel-section">
+
+        <h2>Tests</h2>
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Test Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for test in tests %}
+                <tr>
+                    <td>{{ test.id }}</td>
+                    <td>{{ test.name }}</td>
+
+                    <td class="actions">
+
+                        <a href="testattempts/{{test.id}}/" class="btn view-btn">
+                            View Attempts
+                        </a>
+
+                        <form method="post" action="deletetest/{{test.id}}" onsubmit="return confirm('Are you sure? Deletion is irreversible!');" class="inline-form">
+                            {% csrf_token %}
+                            <button class="btn delete-btn" type="submit">
+                                Delete
+                            </button>
+                        </form>
+
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No tests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- USER LIST -->
+    <section class="panel-section">
+
+        <h2>Users</h2>
+
+        <table class="data-table">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in users %}
+                <tr>
+
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+
+                    <td>
+
+                        <a href="userattempts/{{user.id}}" class="btn view-btn">
+                            View Attempts
+                        </a>
+
+                    </td>
+
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No users found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+</body>
+</html>

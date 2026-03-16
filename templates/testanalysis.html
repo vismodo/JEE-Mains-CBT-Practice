@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Analysis - Mains CBT</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="/static/css/testanalysis.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="page-header">
+        <h1>Test Analysis</h1>
+        <h2>{{ testattempt.test.name }}</h2>
+        <h3 style="color: rgb(106, 106, 106);">User: {{ testattempt.user.username }}</h3>
+        <h3 style="color: rgb(106, 106, 106);">{{ testattempt.started }}</h3>
+        <button onclick="window.location.href='/'" style="border: none; cursor:pointer; background-color: #f0f0f0; border-radius: 5px; background-color: rgb(127, 127, 255); font-size: 20px; color:white; padding: 8px 20px;">Return</button>
+        <br><br><button onclick="window.print()" style="border: none; cursor:pointer; background-color: #f0f0f0; border-radius: 5px; background-color: rgb(127, 127, 255); font-size: 20px; color:white; padding: 8px 20px;">Print</button>
+        <br><br><div class="score-card">
+            <h3>Report</h3>
+            <p>Finished: {{ testattempt.finished }}</p>
+            <p>Mathematics: <span>{{ score.0 }} / 100</span></p>
+            <p>Physics: <span>{{ score.1 }} / 100</span></p>
+            <p>Chemistry: <span>{{ score.2 }} / 100</span></p>
+            <p>Total: <span>{{ total }} / 300</span></p>
+            <p>Percentage: <span>{{ percentage }}%</span></p>
+        </div>
+    </header>
+
+    <div class="questions">
+
+        {% for q in analysis %}
+        <div class="question-card">
+
+            <h2>Question {{ q.question.question_number }}</h2>
+
+            <div class="question-image">
+                <img src="{{ q.question.question.url }}">
+            </div>
+
+            {% if not q.question.section %}
+<div class="options">
+    <h4>Options</h4>
+
+    <div class="option-list">
+
+        <div class="option">
+            <span class="badge">1</span>
+            <img src="{{ q.question.option_1.url }}">
+        </div>
+
+        <div class="option">
+            <span class="badge">2</span>
+            <img src="{{ q.question.option_2.url }}">
+        </div>
+
+        <div class="option">
+            <span class="badge">3</span>
+            <img src="{{ q.question.option_3.url }}">
+        </div>
+
+        <div class="option">
+            <span class="badge">4</span>
+            <img src="{{ q.question.option_4.url }}">
+        </div>
+
+    </div>
+</div>
+{% endif %}
+
+            <div class="result">
+                <p><strong>Your Answer:</strong> {{ q.selected_option }}</p>
+                <p><strong>Correct Answer:</strong> {{ q.correct_option }}</p>
+                <p><strong>Status:</strong> {{ q.status }}</p>
+
+                <p class="{% if q.is_correct == 0 %}correct{%elif q.is_correct == 2 %} unattempted {% elif q.is_correct == 1 %} dropped {% else %}incorrect{% endif %}">
+                    {% if q.is_correct == 0 %}✔ Correct {%elif q.is_correct == 2 %} Unattempted {%elif q.is_correct == 1 %} Dropped {% else %}✘ Incorrect{% endif %}
+                </p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

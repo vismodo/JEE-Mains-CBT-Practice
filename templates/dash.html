@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - JEE Mains CBT</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="/static/css/dash.css">
+</head>
+
+<body>
+
+<div id="test_start_cover" hidden style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9); z-index: 9999;">
+        <div style="text-align: center; margin-top: 20%;">
+            <h2 style="color: #333;">Loading Test...</h2>
+        </div>
+</div>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+
+        <h1 class="logo">JEE Mains CBT</h1>
+
+        <div class="header-right">
+
+            <button class="attempts-btn" onclick="openModal()">
+                View Attempts
+            </button>
+            {% if admin_show %}
+                <button onclick="window.location.href='/manage/'" class="attempts-btn">
+                    Admin Panel
+                </button>
+            {% endif %}
+
+            <span class="username">
+                Welcome, {{ user_name }}
+            </span>
+
+            <a href="/auth/logout" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+    <main>
+        <h2 class="section-title">Available Tests</h2>
+        <div class="tests-grid">
+
+            {% for test in tests %}
+            <div class="test-card">
+
+                <h3>{{ test.name }}</h3>
+
+                <p class="description">
+                    {{ test.date }}
+                </p>
+                <a href="/start/{{ test.id }}" class="start-btn" onclick="document.getElementById('test_start_cover').hidden = false;">
+                    Start Test
+                </a>
+            </div>
+            {% empty %}
+                <p>No tests available.</p>
+            {% endfor %}
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- ================= ATTEMPTS MODAL ================= -->
+
+<div id="attemptModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2>Your Attempts</h2>
+
+        <div class="attempt-list">
+
+            {% for attempt in attempts %}
+            <div class="attempt-item">
+
+                <div class="attempt-info">
+                    <strong>{{ attempt.test.name }}</strong>
+                    <small>{{ attempt.started }}</small>
+                </div>
+                {% if attempt.active == False %}
+                <div class="attempt-actions">
+                    <span class="score">
+                        Score: {{ attempt.score }}
+                    </span>
+
+                    <a href="/testanalysis/{{ attempt.id }}"
+                       class="analysis-btn">
+                        Analysis
+                    </a>
+                </div>
+                {% else %}
+                    <div class="attempt-actions">
+
+                    <a href="/test/"
+                       class="analysis-btn" style="background-color: #f0ad4e;">
+                        Resume Test
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+            {% empty %}
+                <p>No attempts yet.</p>
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= JS ================= -->
+
+<script>
+
+function openModal() {
+    document.getElementById("attemptModal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("attemptModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("attemptModal");
+    if (event.target === modal) closeModal();
+}
+
+</script>
+
+</body>
+</html>

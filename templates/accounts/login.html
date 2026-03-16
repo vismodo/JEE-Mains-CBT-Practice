@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login — Mains CBT</title>
+    <link rel="stylesheet" href="/static/css/auth.css">
+  </head>
+  <body>
+    <div class="auth-container">
+      <h2>Login</h2>
+      <form id="loginForm" method="post" action="">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="hidden" name="csrfmiddlewaretoken" id="csrf-token">
+        <div class="auth-actions">
+          <button type="submit" class="submit-btn">Login</button>
+        </div>
+      </form>
+      {% if badpw %}
+        <div class="error-message">Invalid username or password.</div>
+      {% endif %}
+      <div class="auth-footer">Need an account? <a href="../register/">Sign up</a></div>
+    </div>
+
+    <script>
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      document.getElementById('csrf-token').value = getCookie('csrftoken') || '';
+    </script>
+  </body>
+</html>

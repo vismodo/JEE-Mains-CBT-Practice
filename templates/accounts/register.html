@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register — Mains CBT</title>
+    <link rel="stylesheet" href="/static/css/auth.css">
+  </head>
+  <body>
+    <div class="auth-container">
+      <h2>Register</h2>
+      <form id="registerForm" method="post" action="">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password1" placeholder="Password" style="border-radius: .375rem 0.375rem 0rem 0rem; margin-bottom: -12px;" required>
+        <input type="password" name="password2" placeholder="Confirm password" style="border-radius: 0rem 0rem .375rem 0.375rem; border-top: 0px solid white" required>
+        <input type="hidden" name="csrfmiddlewaretoken" id="csrf-token">
+        <div class="auth-actions">
+          <button type="submit" class="submit-btn">Register</button>
+        </div>
+      </form>
+      {% if error %}
+        <div class="error-message">{{ error }}</div>
+      {% endif %}
+      <div class="auth-footer">Already have an account? <a href="../login/">Log in</a></div>
+    </div>
+
+    <script>
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+      document.getElementById('csrf-token').value = getCookie('csrftoken') || '';
+    </script>
+  </body>
+</html>
