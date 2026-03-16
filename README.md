@@ -267,7 +267,7 @@ Fields:
 | --------------- | ---------------------------------------- |
 | test            | associated test                          |
 | subject         | Physics / Chemistry / Mathematics        |
-| section         | Section 1 (MCQ) or Section 2 (Numerical) |
+| section         | Section 1 (MCQ) (`False`) or Section 2 (Numerical) (`True`) |
 | question        | image of the question                    |
 | question_id     | original question identifier             |
 | question_number | order in the test                        |
