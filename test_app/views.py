@@ -64,6 +64,11 @@ def test_view(request):
             else:
                 q_attempt.type = QuestionAttempt.Type.UNATTEMPTED
             q_attempt.save()
+        if 'submit' in request.POST.get('action'):
+            testattempt.active = False
+            testattempt.finished = timezone.now()
+            testattempt.save()
+            return redirect('test_app:testanalysis', testattempt.id)
         if 'm' in request.POST.get('action'):
             q_attempt = QuestionAttempt.objects.get(attempt=testattempt, question=active_question)
             if q_attempt.type == QuestionAttempt.Type.ATTEMPTED:
@@ -80,11 +85,6 @@ def test_view(request):
             if q_attempt.type != QuestionAttempt.Type.UNATTEMPTED:
                 q_attempt.type = QuestionAttempt.Type.UNATTEMPTED
             q_attempt.save()
-        if 'submit' in request.POST.get('action'):
-            testattempt.active = False
-            testattempt.finished = timezone.now()
-            testattempt.save()
-            return redirect('test_app:testanalysis', testattempt.id)
         return redirect('test_app:test')
     
     question_stat = []
