@@ -60,7 +60,7 @@ def import_test(url, answer_file_path):
                     options_images.append(option_image)
                     options.append(option_id)
                 correct = []
-                if not ans == "Drop":
+                if not ans.lower() == "drop":
                     for i in ans.split(","):
                         p = i.strip()
                         correct.append(options.index(p)+1)
@@ -68,7 +68,7 @@ def import_test(url, answer_file_path):
                 mode = 1
                 options_images = []
                 correct = []
-                if not ans == "Drop":
+                if not ans.lower() == "drop":
                     for i in ans.split(","):
                         correct.append(int(i))
             question_image = imgurls[0]['src']
