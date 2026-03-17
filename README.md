@@ -51,8 +51,8 @@ Official information about JEE Main can be found on the NTA website:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/vismodo/JEE-Mains-CBT-Practice.git
+cd JEE-Mains-CBT-Practice
 ```
 
 Or download the ZIP from GitHub and extract it.
