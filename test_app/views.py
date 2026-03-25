@@ -77,8 +77,12 @@ def test_view(request):
                 q_attempt.type = QuestionAttempt.Type.UA_MARKED
             q_attempt.save()
         if 'n' in request.POST.get('action'):
-             testattempt.active_question += 1
-             testattempt.save()
+             try:
+                 q_attempt = QuestionAttempt.objects.get(attempt=testattempt, question=testattempt.active_question+1)
+                 testattempt.active_question += 1
+                 testattempt.save()
+             except:
+                 pass
         if 'c' in request.POST.get('action'):
             q_attempt = QuestionAttempt.objects.get(attempt=testattempt, question=active_question)
             q_attempt.selected = 0
