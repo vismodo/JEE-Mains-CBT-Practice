@@ -1,10 +1,10 @@
 # JEE Mains CBT Practice Interface
 
-A **recreation of the JEE Main Computer Based Test interface** built with Django.
+A **recreation of the JEE Main Computer Based Test interface** for students, parents and educators. Built using Django.
 
 ![screenshot_of_test](screenshots/test_screenshot.jpeg)
 
-(Screenshot question content blurred. Interface recreated for practice purposes only. [View more screenshots](screenshots/))
+(Screenshot question content blurred. Interface recreated for practice purposes only. [View more screenshots](screenshots/).)
 This project allows users to **create and attempt mock JEE Main tests** using question papers extracted from official response sheet pages.
 
 The goal of the project is to replicate the **look and behaviour of the real exam interface** so students can practice in an environment similar to the actual test.
@@ -33,6 +33,8 @@ Official information about JEE Main can be found on the NTA website:
 # Features
 
 * Recreated **JEE Main CBT exam interface**
+* Multiple-User Support
+* User login (`/auth/login/`) and registration (`/auth/register/`)
 * Practice tests with:
 
   * question navigation
@@ -49,8 +51,8 @@ Official information about JEE Main can be found on the NTA website:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/vismodo/JEE-Mains-CBT-Practice.git
+cd JEE-Mains-CBT-Practice
 ```
 
 Or download the ZIP from GitHub and extract it.
@@ -80,7 +82,7 @@ These scripts will:
 * install Python dependencies
 * create database migrations
 * apply migrations
-* create a Django superuser
+* create a Django superuser (a user with access to the admin panel)
 
 After setup, start the development server:
 
@@ -93,6 +95,7 @@ Open:
 ```
 http://127.0.0.1:8000
 ```
+Users login at `http://127.0.0.1:8000/auth/login/` and a student may register at `http://127.0.0.1:8000/auth/register/`.
 
 ---
 
@@ -214,9 +217,9 @@ The project includes **two admin interfaces**.
 Features:
 
 * view tests
-* delete tests
+* delete tests (**Also deletes test attempts!**)
 * view user attempts
-* test analytics
+* test analyses
 
 ---
 
@@ -229,8 +232,11 @@ Features:
 Note: the CSS may appear broken because static files are not fully configured for production.
 
 ---
+# Building Custom Tests
 
-# Data Model Structure
+Building custom tests requires an understanding of Django models and the data model structure in this project.
+
+## Data Model Structure
 
 The core structure is defined in `test_app/models.py`.
 
